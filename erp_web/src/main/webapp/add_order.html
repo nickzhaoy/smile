@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>采购订单申请</title>
+<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+<script type="text/javascript" src="ui/jquery.min.js"></script>
+<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+<script type="text/javascript" src="js/add_order.js"></script>
+</head>
+<body>
+<form id="editForm">
+<span id="_supplier">供应商</span>：<input id="supplier" name="t.supplieruuid">
+</form>
+<table id="grid"></table>
+总计：<span id="sum">0.00</span>
+<button id="saveBtn">提交订单</button>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>重置密码</title>
+<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+<script type="text/javascript" src="ui/jquery.min.js"></script>
+<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+<script type="text/javascript" src="js/pwd.js"></script>
+<script type="text/javascript" src="js/date.js"></script>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+<div class="easyui-panel">
+<form id="searchForm">
+	登陆名：<input name="t1.username" >
+<!-- 	密码：<input name="t1.pwd" > -->
+	真实姓名：<input name="t1.name" >
+	性别：<input name="t1.gender" value="1" type="radio">男<input name="t1.gender" value="0" type="radio">女
+	EMAIL：<input name="t1.email" >
+	电话：<input name="t1.tele" >
+	地址：<input name="t1.address" >
+	出生年月日：<input name="t1.birthday" class="easyui-datebox">至<input name="t2.birthday" class="easyui-datebox">
+	部门：<input name="t1.dep.uuid" class="easyui-combobox" data-options="url:'dep_list.action',textField:'name',valueField:'uuid'" >
+
+	<button type="button" id="btnSearch">查询</button>
+</form>
+</div>
+<table id="grid"></table>
+<div id="editWindow" class="easyui-window" title="重置密码" 
+	style="width: 200px;height: 150px" data-options="closed:true">
+	<form id="editForm">
+	<input name="id" id="id" type="hidden"> 
+		<table>
+			<tr>
+				<td>密码</td><td><input name="pwd"> </td>
+			</tr>
+		</table>	
+		<button id="btnSave" type="button">保存</button>
+	</form>
+</div>
+
+</body>
+</html>

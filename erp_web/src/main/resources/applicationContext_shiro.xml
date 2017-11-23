@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd"> 
+						
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" depends-on="myFilter">	
+<!-- 	depends-on 提前实例化	 -->
+		<property name="securityManager" ref="securityManager" />	
+<!-- 		如果未登录状态下访问页面或action请求时 跳转到login.html	 -->
+		<property name="loginUrl" value="/login.html" /> 
+<!-- 		在登录状态下 如果访问一个没有授权的页面或请求时 跳转到 error.html -->
+		<property name="unauthorizedUrl" value="/error.html" /> 
+		<property name="filters">
+		  <map>
+		   <entry key="perms" value-ref="myFilter"></entry>
+		  </map>
+		</property>
+		
+		
+		<property name="filterChainDefinitions">
+			<value>					
+				/error.html = anon
+				/login_*.action=anon
+				/emp_updatePwd.action= perms[]
+				/pwd.html=perms["重置密码"]	
+				/emp_updatePwd_reset.action=perms["重置密码"]
+										
+				/orders.html= perms["采购申请","采购订单查询","采购审核","采购确认","采购入库","销售订单录入","销售订单查询","销售订单出库"]	
+				/orders_add.action= perms["采购申请","销售订单录入"]	
+				/goods_list.action= perms["采购申请","销售订单录入","库存查询","库存变动记录"]						
+				/supplier_list.action= perms["采购申请","销售订单录入"]
+				
+				/orders_listByPage.action= perms["采购申请","采购订单查询","采购审核","采购确认","采购入库","销售订单录入","销售订单查询","销售订单出库"]
+				
+<!-- 				/orders_doCheck.action=perms["采购审核"] -->
+				/orders_doStart.action=perms["采购确认"]	
+				/store_mylist.action= perms["采购入库","销售订单出库"]
+				/orderdetail_doInStore.action=perms["采购入库"]
+				/orderdetail_doOutStore.action=perms["销售订单出库"]
+				
+				/storedetail.html= perms["库存查询"]
+				
+				/goods_get.action= perms["库存查询","库存变动记录"]
+				/store_list.action= perms["库存查询","库存变动记录"]
+				/store_get.action= perms["库存查询","库存变动记录"]
+				/storedetail_listByPage.action= perms["库存查询"]
+				/storeoper_listByPage.action= perms["库存查询"]
+
+				/storeoper.html= perms["库存变动记录"]
+				/storeoper_listByPage.action= perms["库存变动记录"]
+
+				/emp_list.action= perms["库存变动记录"]
+				/emp_get.action= perms["库存变动记录","采购申请"]
+					
+				/orderReport.html= perms["销售统计表"]
+				/report_orderReport*.action= perms["销售统计表"]
+
+				/orderTrend.html= perms["销售趋势分析"]
+				/report_orderTrend*.action= perms["销售趋势分析"]
+								
+				/roleMenuSet.html=perms["角色权限设置"]
+				/role_list.action=perms["角色权限设置"]
+				/role_readRoleMenus.action=perms["角色权限设置"]
+				/role_updateRoleMenus.action=perms["角色权限设置"]
+								
+				/empRoleSet.html=perms["用户角色设置"]
+				/emp_list.action=perms["用户角色设置"]
+				/emp_readEmpRoles.action=perms["用户角色设置"]
+				/emp_updateEmpRoles.action=perms["用户角色设置"]
+
+				/role.html= perms["角色设置"]
+				/role_*.action= perms["角色设置"]			
+
+				/goodstype.html= perms["商品类型"]						
+				/goodstype_*.action= perms["商品类型"]	
+									
+				/goods.html= perms["商品"]						
+				/goods_*.action= perms["商品"]
+
+				/supplier.html = perms["供应商","客户"]						
+				/supplier_*.action = perms["供应商","客户"]
+				
+				/store.html= perms["仓库"]
+				/store_*.action= perms["仓库"]
+
+				/emp.html= perms["员工"]								
+				/emp_*.action= perms["员工"]
+				/dep_list.action=perms["员工"]
+				
+				/dep.html= perms["部门"]		
+				/dep_*.action= perms["部门"]		
+
+				/*.html = authc					
+				/*.action = authc					
+				/* = authc	
+			</value>
+		</property>
+	</bean>
+	
+<!-- 	大脑  中央枢纽 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="erpRealm"></property>
+	</bean>
+	
+	
+	<bean id="erpRealm" class="cn.itcast.erp.realm.ErpRealm">
+	 <property name="menuBiz" ref="menuBiz"></property>
+	 <property name="empBiz" ref="empBiz"></property>
+	</bean>
+	
+	<bean id="myFilter" class="cn.itcast.erp.filter.MyFilter">
+	</bean>
+</beans>
